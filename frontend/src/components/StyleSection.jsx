@@ -13,7 +13,7 @@ export default function StyleSection({ things, isLoading }) {
                     <div key={thingsItem.id} className="col-lg-4 col-md-6">
                       <div className="card" style={{ width: "18rem" }}>
                         <img
-                          href={thingsItem.image}
+                          src={thingsItem.image}
                           className="card-img-top"
                           alt="shop"
                         />
