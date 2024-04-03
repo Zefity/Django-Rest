@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -21,4 +24,8 @@ class Thing(models.Model):
     
     def __str__(self):
         return f'Вещь: {self.name} | Категория: {self.category.name}'
+    
+class UserModel(AbstractUser):
+    adress = models.TextField(max_length=600)
+    phone_number = PhoneNumberField(blank=True)
     

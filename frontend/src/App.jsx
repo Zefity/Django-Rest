@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "./components/Header";
 import StyleSection from "./components/StyleSection";
 import Footer from "./components/Footer/Footer";
+import RegisterSection from "./components/RegisterSection";
 
 function App() {
   const [categories, setCategories] = useState("");
@@ -32,9 +33,10 @@ function App() {
 
   return (
     <>
-      <Header />
+      <RegisterSection />
+      {/* <Header />
       <StyleSection things={things} isLoading={isLoading} />
-      <Footer />
+      <Footer /> */}
     </>
   );
 }
