@@ -35,10 +35,11 @@ def issue_token(request: Request):
     serializer = IssueTokenRequestSerializer(data=request.data)
     if serializer.is_valid():
         authenticated_user = authenticate(**serializer.validated_data)
-        try:
-            token = Token.objects.get(user=authenticated_user)
-        except Token.DoesNotExist:
-            token = Token.objects.create(user=authenticated_user)
+        token = Token.objects.get_or_create(user=authenticated_user)
+        # try:
+        #     token = Token.objects.get(user=authenticated_user)
+        # except Token.DoesNotExist:
+        #     token = Token.objects.create(user=authenticated_user)
         return Response(TokenSeriazliser(token).data)
     else:
         return Response(serializer.errors, status=400)
