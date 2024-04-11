@@ -24,22 +24,21 @@ class ThingViewSet(viewsets.ModelViewSet):
 
 @action(detail=True, methods=['post', HTTPMethod.POST])
 @permission_classes([IsAuthenticated])
-@authentication_classes([TokenAuthentication])
 class UserModelViewSet(viewsets.ModelViewSet):
     queryset = models.UserModel.objects.all()
     serializer_class = serializers.UserModelSerializer
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def issue_token(request: Request):
-    serializer = IssueTokenRequestSerializer(data=request.data)
-    if serializer.is_valid():
-        authenticated_user = authenticate(**serializer.validated_data)
-        token = Token.objects.get_or_create(user=authenticated_user)
-        # try:
-        #     token = Token.objects.get(user=authenticated_user)
-        # except Token.DoesNotExist:
-        #     token = Token.objects.create(user=authenticated_user)
-        return Response(TokenSeriazliser(token).data)
-    else:
-        return Response(serializer.errors, status=400)
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def issue_token(request: Request):
+#     serializer = IssueTokenRequestSerializer(data=request.data)
+#     if serializer.is_valid():
+#         authenticated_user = authenticate(**serializer.validated_data)
+#         token = Token.objects.get_or_create(user=authenticated_user)
+#         # try:
+#         #     token = Token.objects.get(user=authenticated_user)
+#         # except Token.DoesNotExist:
+#         #     token = Token.objects.create(user=authenticated_user)
+#         return Response(TokenSeriazliser(token).data)
+#     else:
+#         return Response(serializer.errors, status=400)

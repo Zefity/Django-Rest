@@ -26,6 +26,6 @@ class Thing(models.Model):
         return f'Вещь: {self.name} | Категория: {self.category.name}'
     
 class UserModel(AbstractUser):
-    adress = models.TextField(max_length=600)
+    adress = models.TextField(max_length=600, blank=True)
     phone_number = PhoneNumberField(blank=True)
     
