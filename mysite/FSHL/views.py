@@ -1,18 +1,16 @@
 from rest_framework.decorators import permission_classes, authentication_classes, action, api_view
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 
-from http import HTTPMethod
-
-from rest_framework import viewsets
+from rest_framework import viewsets, status, generics, permissions
 from . import serializers
-from .serializers import IssueTokenRequestSerializer, TokenSeriazliser
 
 from . import models
+from .utils import create_fshl_user
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = models.Category.objects.all()
@@ -22,23 +20,46 @@ class ThingViewSet(viewsets.ModelViewSet):
     queryset = models.Thing.objects.all()
     serializer_class = serializers.ThingSerializer
 
-@action(detail=True, methods=['post', HTTPMethod.POST])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-class UserModelViewSet(viewsets.ModelViewSet):
-    queryset = models.UserModel.objects.all()
-    serializer_class = serializers.UserModelSerializer
+@authentication_classes([JWTAuthentication])
+def get_user_data(request):
+    user = request.user
+    serializer = serializers.UserModelSerializer(user)
+    return Response(serializer.data)
 
-# @api_view(['POST'])
-# @permission_classes([AllowAny])
-# def issue_token(request: Request):
-#     serializer = IssueTokenRequestSerializer(data=request.data)
-#     if serializer.is_valid():
-#         authenticated_user = authenticate(**serializer.validated_data)
-#         token = Token.objects.get_or_create(user=authenticated_user)
-#         # try:
-#         #     token = Token.objects.get(user=authenticated_user)
-#         # except Token.DoesNotExist:
-#         #     token = Token.objects.create(user=authenticated_user)
-#         return Response(TokenSeriazliser(token).data)
-#     else:
-#         return Response(serializer.errors, status=400)
+# @api_view(['GET', 'POST'])
+# def registration(request):
+#     new_user = create_fshl_user(username=request.data["username"], 
+#                                 email=request.data["email"], 
+#                                 password=request.data["password"], 
+#                                 phone_number=request.data["phone_number"], 
+#                                 adress=request.data["adress"]
+#                                 )
+#     # serializer = serializers.UserModelSerializer(new_user)
+#     # return Response(serializer.data)
+#     return Response(status)
+
+
+class RegisterAPI(generics.GenericAPIView):
+    serializer_class=serializers.RegisterSerializer
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        user = serializer.save()
+        return Response({
+            "user": serializers.UserModelSerializer(user, context=self.get_serializer_context()).data
+            })
+     
+
+
+
+# @action(detail=True, methods=['post', 'get'])
+# # @permission_classes([IsAuthenticated])
+# # @authentication_classes([JWTAuthentication])
+# class UserModelViewSet(viewsets.ModelViewSet):
+#     serializer_class = serializers.UserModelSerializer
+

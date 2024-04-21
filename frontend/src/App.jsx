@@ -3,42 +3,61 @@ import axios from "axios";
 import Header from "./components/Header";
 import StyleSection from "./components/StyleSection";
 import Footer from "./components/Footer/Footer";
-import RegisterSection from "./components/RegisterSection";
+import RegistrationSection from "./components/RegistrationSection";
 import LoginSection from "./components/LoginSection";
+import ProfileSection from "./components/ProfileSection";
+import { Helmet } from "react-helmet";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const [categories, setCategories] = useState("");
   const [things, setThings] = useState("");
 
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const [isLoading, setisLoading] = useState(true);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  // if (localStorage.getItem("accessToken") != null) {
+  //   setIsAuthenticated(true);
+  // }
 
-  // const fetchData = async () => {
-  //   try {
-  //     const getCategories = await axios.get(
-  //       "http://127.0.0.1:8000/api/Category/"
-  //     );
-  //     const getThings = await axios.get("http://127.0.0.1:8000/api/Thing/");
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  //     setCategories(getCategories.data);
-  //     setThings(getThings.data);
-  //     setisLoading(false);
-  //     console.log(getThings.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const getCategories = await axios.get(
+        "http://127.0.0.1:8000/api/category/"
+      );
+      const getThings = await axios.get("http://127.0.0.1:8000/api/thing/");
+
+      setCategories(getCategories.data);
+      setThings(getThings.data);
+      setisLoading(false);
+      console.log(getThings.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
-      <LoginSection />
-      {/* <RegisterSection /> */}
-      {/* <Header />
-      <StyleSection things={things} isLoading={isLoading} />
-      <Footer /> */}
+      <BrowserRouter>
+        <Header />
+
+        <Routes>
+          <Route
+            path="/"
+            element={<StyleSection things={things} isLoading={isLoading} />}
+          />
+          <Route path="/login" element={<LoginSection />} />
+          <Route path="/registration" element={<RegistrationSection />} />
+          <Route path="/profile" element={<ProfileSection />} />
+        </Routes>
+
+        <Footer />
+      </BrowserRouter>
     </>
   );
 }

@@ -1,21 +1,3 @@
-main {
-    text-align: center;
-    background-color: blue;
-}
-
-
-.container-main {
-    display: grid; 
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(1);
-}
-
-.container-card {
-    grid-column: 2/12;
-}
-
-
-
 
 
 @media  (max-width: 1000px) {

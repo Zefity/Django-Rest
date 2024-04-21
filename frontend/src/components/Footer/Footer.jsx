@@ -3,7 +3,14 @@ import FooterHistorySection from "./FooterHistorySection";
 
 export default function Footer() {
   return (
-    <footer className="text-center text-lg-start bg-body-tertiary text-muted">
+    <footer
+      className="text-center text-lg-start  text-muted"
+      id="footer"
+      style={{
+        background:
+          "linear-gradient(180deg, #866537, #602e2e 1%, #eccbcb 100%)",
+      }}
+    >
       <FooterContactsSection />
       <FooterHistorySection />
 

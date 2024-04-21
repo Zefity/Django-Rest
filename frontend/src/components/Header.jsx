@@ -1,14 +1,33 @@
+import { NavLink } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 export default function Header() {
+  const navigate = useNavigate();
+
+  function handleLogin() {
+    if (localStorage.getItem("refreshToken")) {
+      navigate("/profile");
+    } else {
+      navigate("/login");
+    }
+  }
+
   return (
-    <header>
-      <nav
-        className="navbar navbar-expand-lg bg-body-tertiary"
-        style={{ backgroundColor: "rgb(91, 125, 156)" }}
-      >
+    <header
+      style={{
+        background: "linear-gradient(180deg, #5ab5b3 87%, #afa7a7 100%)",
+      }}
+    >
+      <nav className="navbar navbar-expand-lg ">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <NavLink
+            to="/"
+            className="navbar-brand"
+            style={{ fontSize: "larger" }}
+          >
             FSHL SHOP
-          </a>
+          </NavLink>
+
           <button
             className="navbar-toggler"
             type="button"
@@ -23,16 +42,7 @@ export default function Header() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav nav-fill me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a
-                  className="nav-link active"
-                  aria-current="page"
-                  href="FSHL.html"
-                >
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link active" href="#">
+                <a className="nav-link active" href="#footer">
                   Link
                 </a>
               </li>
@@ -46,33 +56,33 @@ export default function Header() {
                 >
                   Сategories
                 </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a
-                      className="nav-link  dropdown-item"
-                      href="Page-html/Male-page.html"
-                    >
-                      Male
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="nav-link  dropdown-item"
-                      href="Page-html/Female-page.html"
-                    >
-                      Female
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="nav-link  dropdown-item"
-                      href="Page-html/Unique-page.html"
-                    >
-                      Unique
-                    </a>
-                  </li>
-                </ul>
               </li>
+              <ul className="dropdown-menu">
+                <li>
+                  <a
+                    className="nav-link  dropdown-item"
+                    href="page-Male-page.html"
+                  >
+                    Male
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="nav-link  dropdown-item"
+                    href="page-Female-page.html"
+                  >
+                    Female
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="nav-link  dropdown-item"
+                    href="page-Unique-page.html"
+                  >
+                    Unique
+                  </a>
+                </li>
+              </ul>
             </ul>
             <form className="d-flex" role="search">
               <input
@@ -87,38 +97,23 @@ export default function Header() {
             </form>
             <div className="navbar-nav  mb-2 mb-lg-0" id="nav1">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="page-favourites.html"
+                >
                   <i className="fa fa-heart" aria-hidden="true"></i>
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="page-shopping.basket.html">
                   <i className="fa fa-shopping-basket" aria-hidden="true"></i>
                 </a>
               </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  aria-current="page"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
+              <li className="nav-item">
+                <a className="nav-link" href="#" onClick={handleLogin}>
                   <i className="fa fa-user-circle" aria-hidden="true"></i>
                 </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Registration
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Authorization
-                    </a>
-                  </li>
-                </ul>
               </li>
             </div>
           </div>
