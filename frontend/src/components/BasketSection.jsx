@@ -63,7 +63,6 @@ export default function BasketSection() {
         refresh
       );
       localStorage.setItem("accessToken", response.data["access"]);
-      console.log(response.data);
     } catch (error) {
       console.error("Ошибка при обновлении токена:", error);
     }
@@ -80,24 +79,25 @@ export default function BasketSection() {
         },
       }
     );
+
+    setBasketData(response.data);
+
     console.log(response.data);
 
-    response.data.forEach(async (data) => {
+    const promises = response.data.map(async (data) => {
       try {
         const getThingData = await axios.get(
           `http://127.0.0.1:8000/api/thing/${data.thing}`
         );
 
-        setThingsData((prevThingsData) => [
-          ...prevThingsData,
-          getThingData.data,
-        ]);
-
-        console.log(thingsData[1]);
+        return getThingData.data;
       } catch (error) {
         console.error(error);
+        return null;
       }
     });
+    const thingsData = await Promise.all(promises);
+    setThingsData(thingsData.filter((data) => data !== null));
   };
 
   useEffect(() => {
@@ -127,105 +127,114 @@ export default function BasketSection() {
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <div>
                         <p className="mb-1">Shopping cart</p>
-                        <p className="mb-0">You have 4 items in your cart</p>
+                        <p className="mb-0">
+                          You have {thingsData.length} items in your cart
+                        </p>
                       </div>
                     </div>
 
-                    {/* <>
-                      {thingsData.map((thingsItem, index) => {
-                        return ( */}
-                    <div className="card mb-3">
-                      <div className="card-body">
-                        <div className="row">
-                          <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                            <div
-                              className="bg-image hover-overlay hover-zoom ripple rounded"
-                              data-mdb-ripple-color="light"
-                            >
-                              <img
-                                src="Style/icon/2.jpg"
-                                className="w-100"
-                                alt="Blue Jeans Jacket"
-                              />
-                              <a href="#!">
-                                <div
-                                  className="mask"
-                                  style={{
-                                    backgroundColor: "rgba(251, 251, 251, 0.2)",
-                                  }}
-                                ></div>
-                              </a>
-                            </div>
-                          </div>
+                    <>
+                      {Array.isArray(thingsData) &&
+                        thingsData.map((thingsItem, index) => {
+                          return (
+                            <div key={thingsItem.id} className="card mb-3">
+                              <div className="card-body">
+                                <div className="row">
+                                  <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                    <div
+                                      className="bg-image hover-overlay hover-zoom ripple rounded"
+                                      data-mdb-ripple-color="light"
+                                    >
+                                      <img
+                                        src={thingsItem.image}
+                                        className="w-100"
+                                        alt="Blue Jeans Jacket"
+                                      />
+                                      <a href="#!">
+                                        <div
+                                          className="mask"
+                                          style={{
+                                            backgroundColor:
+                                              "rgba(251, 251, 251, 0.2)",
+                                          }}
+                                        ></div>
+                                      </a>
+                                    </div>
+                                  </div>
 
-                          <div className="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                            <p>
-                              <strong>dwq</strong>
-                            </p>
-                            <p>Color: blue</p>
-                            <p>Size: M</p>
-                            <button
-                              type="button"
-                              className="btn btn-primary btn-sm me-1 mb-2"
-                              data-mdb-toggle="tooltip"
-                              title="Remove item"
-                            >
-                              <i className="fas fa-trash"></i>
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-danger btn-sm mb-2"
-                              data-mdb-toggle="tooltip"
-                              title="Move to the wish list"
-                            >
-                              <i className="fas fa-heart"></i>
-                            </button>
-                          </div>
+                                  <div className="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                    <p>
+                                      <strong>{thingsItem.name}</strong>
+                                    </p>
+                                    <p>Color: {thingsItem.color}</p>
+                                    <p>Size: {thingsItem.size}</p>
+                                    <button
+                                      type="button"
+                                      className="btn btn-primary btn-sm me-1 mb-2"
+                                      data-mdb-toggle="tooltip"
+                                      title="Remove item"
+                                    >
+                                      <i className="fas fa-trash"></i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="btn btn-danger btn-sm mb-2"
+                                      data-mdb-toggle="tooltip"
+                                      title="Move to the wish list"
+                                    >
+                                      <i className="fas fa-heart"></i>
+                                    </button>
+                                  </div>
 
-                          <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                            <div
-                              className="d-flex mb-4"
-                              style={{ maxWidth: "300px" }}
-                            >
-                              <button
-                                className="btn btn-primary px-3 me-2"
-                                // onClick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                              >
-                                <i className="fas fa-minus"></i>
-                              </button>
+                                  <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                    <div
+                                      className="d-flex mb-4"
+                                      style={{ maxWidth: "300px" }}
+                                    >
+                                      <button
+                                        className="btn btn-primary px-3 me-2"
+                                        // onClick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                      >
+                                        <i className="fas fa-minus"></i>
+                                      </button>
 
-                              <div className="form-outline">
-                                <input
-                                  id="form1"
-                                  min="0"
-                                  name="quantity"
-                                  defaultValue="1"
-                                  type="number"
-                                  className="form-control"
-                                />
-                                <label className="form-label" htmlFor="form1">
-                                  Quantity
-                                </label>
+                                      <div className="form-outline">
+                                        <input
+                                          id="form1"
+                                          min="0"
+                                          name="quantity"
+                                          defaultValue={
+                                            basketData[index].quantity
+                                          }
+                                          type="number"
+                                          className="form-control"
+                                        />
+                                        <label
+                                          className="form-label"
+                                          htmlFor="form1"
+                                        >
+                                          Quantity
+                                        </label>
+                                      </div>
+
+                                      <button
+                                        className="btn btn-primary px-3 ms-2"
+                                        // onClick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                      >
+                                        <i className="fas fa-plus"></i>
+                                      </button>
+                                    </div>
+
+                                    <p className="text-start text-md-center">
+                                      <strong>{thingsItem.price}$</strong>
+                                    </p>
+                                  </div>
+                                </div>
                               </div>
-
-                              <button
-                                className="btn btn-primary px-3 ms-2"
-                                // onClick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                              >
-                                <i className="fas fa-plus"></i>
-                              </button>
                             </div>
-
-                            <p className="text-start text-md-center">
-                              <strong>$17.99</strong>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* );
-                      })}
-                    </> */}
+                          );
+                        })}
+                    </>
                   </div>
                   <div className="col-lg-5">
                     <div className="card bg-primary text-white rounded-3">

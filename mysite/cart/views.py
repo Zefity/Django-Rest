@@ -13,23 +13,23 @@ import json
 @api_view(['POST', 'GET'])
 def basket_add(request, thing_id):
     data = json.loads(request.body.decode('utf-8'))
-    qty = data.get('qty')
+    
 
     thing = Thing.objects.get(id=thing_id)
     baskets = Cart.objects.filter(user=request.user, thing=thing)
     user = request.user
-    quantity = qty
+    
     
 
     if not baskets.exists():
-        Cart.objects.create(user=request.user, thing=thing, quantity=quantity)
-        serializer = CartSerializer(user=user, thing=thing, quantity=quantity)
+        Cart.objects.create(user=request.user, thing=thing)
+        serializer = CartSerializer(user=user, thing=thing)
 
     else:
         basket = baskets.first()
         basket.quantity += 1
         basket.save()
-        serializer = CartSerializer(user=user.username, thing=thing, quantity=quantity)
+        serializer = CartSerializer(user=user.username, thing=thing)
         serializer.save()
     
 

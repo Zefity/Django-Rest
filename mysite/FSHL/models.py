@@ -10,11 +10,24 @@ class Category(models.Model):
         return self.name
     
 class Thing(models.Model):
+    SIZES = {
+        "S": "S",
+        "M": "M",
+        "L": "L",
+    }
+
+    COLORS = {
+        "White": "White",
+        "Black": "Black",
+    }
+
     name = models.CharField(max_length=250, unique=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=7, decimal_places=0)
     image = models.ImageField(upload_to='products_images')
     quantity = models.PositiveIntegerField(default=0)
+    size = models.CharField(max_length=1, choices=SIZES)
+    color = models.CharField(max_length=10, choices=COLORS)
     category = models.ForeignKey(
         Category,
         related_name="thing",
