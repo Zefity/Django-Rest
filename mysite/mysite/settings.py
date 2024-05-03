@@ -47,10 +47,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'phonenumber_field',
+    'rest_framework_simplejwt',
 
     'FSHL',
-
-    'rest_framework_simplejwt',
+    'cart',
 ]
 
 REST_FRAMEWORK = {
@@ -209,3 +209,5 @@ LOGIN_URL = '/api/token/'
 #         'LOCATION': '127.0.0.1:8000',
 #     }
 # }
+
+CART_SESSION_ID = 'cart'

@@ -1,4 +1,34 @@
-export default function StyleSection({ things, isLoading }) {
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+export default function StyleSection() {
+  const [categories, setCategories] = useState("");
+  const [things, setThings] = useState("");
+
+  const [isLoading, setisLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const getCategories = await axios.get(
+        "http://127.0.0.1:8000/api/category/"
+      );
+      const getThings = await axios.get("http://127.0.0.1:8000/api/thing/");
+
+      setCategories(getCategories.data);
+      setThings(getThings.data);
+      setisLoading(false);
+      console.log(getThings.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(things);
+
   return (
     // <section
     //   style={{ background: "linear-gradient(0deg, #866537 0%, #afa7a7 100%)" }}
@@ -47,7 +77,7 @@ export default function StyleSection({ things, isLoading }) {
                     className="carousel-item active"
                     data-bs-interval="10000"
                   >
-                    <div className="d-block w-100">
+                    <div className="d-block w-100" id="carousel1">
                       <div className="row">
                         <div className="col-lg-12 col-md-12">
                           <img
@@ -88,25 +118,38 @@ export default function StyleSection({ things, isLoading }) {
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-3 col-md-6">
-              <div className="card" style={{ width: "18rem" }} id="card1">
-                <a href="page-card.html">
-                  <center>
-                    <img
-                      src="Style/icon/1.jpg"
-                      className="card-img-top"
-                      alt="shop"
-                    />
-                  </center>
-                  <div className="card-body">
-                    <p className="card-text">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the c.
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </div>
+            {isLoading ? null : (
+              <>
+                {things.map((thingsItem, index) => {
+                  return (
+                    <div
+                      key={thingsItem.id}
+                      className="col-lg-4 col-md-6 mb-4"
+                      id="card-style"
+                    >
+                      <div
+                        className="card"
+                        style={{ width: "18rem" }}
+                        id="card1"
+                      >
+                        <a href="page-card.html">
+                          <center>
+                            <img
+                              src={thingsItem.image}
+                              className="card-img-top"
+                              alt="shop"
+                            />
+                          </center>
+                          <div className="card-body">
+                            <p className="card-text">{thingsItem.name}</p>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            )}
           </div>
         </div>
       </div>

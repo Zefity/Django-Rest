@@ -4,45 +4,44 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 
 export default function ProfileSection() {
-  // const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState("");
 
-  // const refreshAuthToken = async () => {
-  //   const refresh = {
-  //     refresh: localStorage.getItem("refreshToken"),
-  //   };
-  //   try {
-  //     const response = await axios.post(
-  //       "http://127.0.0.1:8000/api/token/refresh/",
-  //       refresh
-  //     );
-  //     localStorage.setItem("accessToken", response.data["access"]);
-  //   } catch (error) {
-  //     console.error("Ошибка при обновлении токена:", error);
-  //   }
-  // };
+  const refreshAuthToken = async () => {
+    const refresh = {
+      refresh: localStorage.getItem("refreshToken"),
+    };
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/token/refresh/",
+        refresh
+      );
+      localStorage.setItem("accessToken", response.data["access"]);
+    } catch (error) {
+      console.error("Ошибка при обновлении токена:", error);
+    }
+  };
 
-  // const fetchData = async () => {
-  //   try {
-  //     await refreshAuthToken();
-  //     const getUserData = await axios.post(
-  //       "http://127.0.0.1:8000/api/user/",
-  //       {},
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //         },
-  //       }
-  //     );
-  //     setUserData(getUserData.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      await refreshAuthToken();
+      const getUserData = await axios.post(
+        "http://127.0.0.1:8000/api/user/",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      setUserData(getUserData.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // useEffect(() => {
-  //   refreshAuthToken();
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");

@@ -1,4 +1,4 @@
-from rest_framework.decorators import permission_classes, authentication_classes, action, api_view
+from rest_framework.decorators import permission_classes, authentication_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate

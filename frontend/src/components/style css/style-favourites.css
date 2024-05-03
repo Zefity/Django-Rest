@@ -1,0 +1,262 @@
+body {
+  font-family: Dosis, sans-serif;
+}
+
+/* page-user.html */
+
+#page-user {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+/* carousel of images */
+
+#inner img {
+  max-width: 100%;
+}
+
+/*  page-Favourites,
+    page-FSHL
+    */
+/* MAIN  */
+
+#section-fav {
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+#card-body {
+  padding: 0;
+  padding-top: 5px;
+  background-color: rgb(143, 232, 238);
+}
+
+#card-body img {
+  margin-right: 0px;
+}
+
+#card-body button {
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+}
+
+#card1 button {
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+}
+
+/* наложение картинки на картинку */
+#card-style {
+  padding-left: 50px;
+  padding-right: 30px;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: space-around;
+}
+
+#card1 {
+  position: relative;
+}
+
+.image {
+  width: 32px;
+  height: 32px;
+}
+
+.image {
+  position: absolute;
+  top: 10px;
+  left: 75%;
+}
+
+.image1 {
+  position: absolute;
+  top: 50px;
+  left: 75%;
+}
+
+/* h6 c id="class" */
+
+#class {
+  font-weight: bolder;
+  padding-top: 7px;
+  margin-bottom: 10px;
+  padding-right: 65%;
+  padding-left: 11px;
+}
+
+/* h5 */
+
+h6 {
+  margin-bottom: 10px;
+  text-align: left;
+  padding-right: 10%;
+  padding-left: 12px;
+}
+
+/* h6 c id="rating" */
+
+#rating {
+  font-weight: bolder;
+  padding-right: 0%;
+  float: left;
+  font-size: 90%;
+}
+
+#rating img {
+  font-weight: bolder;
+  margin: 0;
+  float: left;
+  padding-right: 3px;
+}
+
+/* h6 c id="comment" */
+
+#comment {
+  font-weight: bolder;
+  padding-right: 15%;
+  float: right;
+  font-size: 90%;
+}
+
+#comment img {
+  font-weight: bolder;
+  margin: 0;
+  float: left;
+}
+
+/* div c id="rating-com" */
+
+#rating-com {
+  height: 25px;
+}
+
+/* div > button <class"button"> */
+
+#buy {
+  margin-top: 10px;
+  background-color: rgb(250, 149, 35);
+}
+
+#buy:hover {
+  background-color: rgb(182, 109, 26);
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  height: 35px;
+}
+
+#basket {
+  margin: 0;
+  padding-left: 18%;
+  float: left;
+}
+
+#basket1 {
+  font-weight: bolder;
+  margin: 0;
+  padding-right: 5%;
+  vertical-align: middle;
+  float: right;
+}
+
+#basket2 {
+  font-weight: bolder;
+  margin: 0;
+  padding-left: 6%;
+  vertical-align: middle;
+  float: left;
+}
+
+/* grid */
+
+/* .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 324px);
+    grid-template-rows: repeat(7, 491.303px);
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: space-around;
+    margin-top: 100px;
+} */
+
+/* content grid */
+
+/* .content-grid {
+    /* grid-column: 4;
+    grid-row: 7; */
+/* display: grid; */
+/* } */
+
+/* item */
+
+/* .item {
+    width: 100%;
+    height: 100%;
+    background-color: #6a11cb;
+    padding-left: 42px;
+    padding-right: 42px;
+} */
+
+/* PAGINATION */
+
+.pagination {
+  text-align: center;
+  justify-content: center;
+  margin: 0;
+  background-color: #866537;
+  padding-bottom: 20px;
+}
+
+/* FOTTER */
+
+.text {
+  text-align: center;
+  padding-left: 300px;
+  padding-right: 300px;
+}
+
+/* style-shop-basket */
+
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #6a11cb;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+}
+
+/* style-page-card */
+
+.description {
+  background-color: #866537;
+}
+
+#carousel1 {
+  position: relative;
+  display: none;
+  float: left;
+  width: 100%;
+  margin-bottom: 3%;
+  margin-top: 1%;
+  backface-visibility: hidden;
+  /* @include transition($carousel-transition); */
+}

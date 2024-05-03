@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -56,33 +56,34 @@ export default function Header() {
                 >
                   Сategories
                 </a>
+
+                <ul className="dropdown-menu">
+                  <li>
+                    <a
+                      className="nav-link  dropdown-item"
+                      href="page-Male-page.html"
+                    >
+                      Male
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="nav-link  dropdown-item"
+                      href="page-Female-page.html"
+                    >
+                      Female
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="nav-link  dropdown-item"
+                      href="page-Unique-page.html"
+                    >
+                      Unique
+                    </a>
+                  </li>
+                </ul>
               </li>
-              <ul className="dropdown-menu">
-                <li>
-                  <a
-                    className="nav-link  dropdown-item"
-                    href="page-Male-page.html"
-                  >
-                    Male
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="nav-link  dropdown-item"
-                    href="page-Female-page.html"
-                  >
-                    Female
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="nav-link  dropdown-item"
-                    href="page-Unique-page.html"
-                  >
-                    Unique
-                  </a>
-                </li>
-              </ul>
             </ul>
             <form className="d-flex" role="search">
               <input
@@ -106,9 +107,9 @@ export default function Header() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="page-shopping.basket.html">
+                <NavLink to="/basket" className="nav-link">
                   <i className="fa fa-shopping-basket" aria-hidden="true"></i>
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#" onClick={handleLogin}>
